@@ -1,4 +1,4 @@
-package com.fastcampus.ch2;
+package com.fastcampus.ch2.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 	@GetMapping("/list")
 	public String list(HttpServletRequest request) {
-		if(!loginCheck(request))
+		if(!loginCheck(request)){
 			return "redirect:/login/login?toURL="+request.getRequestURL();  // 로그인을 안했으면 로그인 화면으로 이동
-		
+		}
 		return "boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
 	}
 
