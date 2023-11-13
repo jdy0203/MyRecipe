@@ -242,7 +242,7 @@
 			<c:forEach var="boardDto" items="${list}">
 				<tr>
 					<td class="no">${boardDto.bno}</td>
-					<td class="title"><a href="<c:url value="/board/read?bno=${boardDto.bno}&page=${ph.page}&pageSize=${ph.pageSize}"/>">${boardDto.title}</a></td>
+					<td class="title"><a href="<c:url value="/board/read?bno=${boardDto.bno}&page=${ph.page}&pageSize=${ph.pageSize}"/>"><c:out value="${boardDto.title}"/></a></td>
 					<td class="writer">${boardDto.writer}</td>
 					<c:choose>
 						<c:when test="${boardDto.reg_date.time >= startOfToday}">
