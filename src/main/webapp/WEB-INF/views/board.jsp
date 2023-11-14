@@ -8,9 +8,13 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>fastcampus</title>
-  <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vegan Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="main.css">
+<%--  <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">--%>
+<%--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--%>
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
   <style>
     * {
@@ -71,16 +75,41 @@
   </style>
 </head>
 <body>
-<div id="menu">
-  <ul>
-    <li id="logo">fastcampus</li>
-    <li><a href="<c:url value='/'/>">Home</a></li>
-    <li><a href="<c:url value='/board/list'/>">Board</a></li>
-    <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
-    <li><a href="<c:url value='/register/add'/>">Sign in</a></li>
-    <li><a href=""><i class="fa fa-search"></i></a></li>
-  </ul>
-</div>
+<!-- 헤더 -->
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light main_navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="<c:url value='/'/>">마이레시피</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="<c:url value='/'/>">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              My recipe
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">마이레시피</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="<c:url value='/board/list'/>">자유게시판</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
+          </li>
+        </ul>
+        <%--				<form class="d-flex">--%>
+        <%--					<input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">--%>
+        <%--					<button class="btn btn-outline-success" type="submit">Search</button>--%>
+        <%--				</form>--%>
+      </div>
+    </div>
+  </nav>
+</header>
 <script>
   let msg = "${msg}";
   if(msg=="WRT_ERR") alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.");
@@ -108,6 +137,7 @@
     <button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i> 목록</button>
   </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
   $(document).ready(function(){
     let formCheck = function() {
@@ -153,7 +183,7 @@
       }
 
       // 2. 수정 상태이면, 수정된 내용을 서버로 전송
-      form.attr("action", "<c:url value='/board/modify?page=${page}&pageSize=${pageSize}'/>");
+      form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
       form.attr("method", "post");
       if(formCheck())
         form.submit();
@@ -163,13 +193,13 @@
       if(!confirm("정말로 삭제하시겠습니까?")) return;
 
       let form = $("#form");
-      form.attr("action", "<c:url value='/board/remove?page=${page}&pageSize=${pageSize}'/>");
+      form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");
       form.attr("method", "post");
       form.submit();
     });
 
     $("#listBtn").on("click", function(){
-      location.href="<c:url value='/board/list?page=${page}&pageSize=${pageSize}'/>";
+      location.href="<c:url value='/board/list${searchCondition.queryString}'/>";
     });
   });
 </script>

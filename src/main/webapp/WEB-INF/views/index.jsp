@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<c:set var="id" value='${pageContext.request.session.getAttribute("id")}'/>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ page session="true"%>
+<c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${id==null ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${id==null ? 'Login' : 'Logout'}"/>
 <!DOCTYPE html>
@@ -13,7 +13,6 @@
 	<title>Vegan Title</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="main.css">
-
 </head>
 <body>
 <!-- 헤더 -->

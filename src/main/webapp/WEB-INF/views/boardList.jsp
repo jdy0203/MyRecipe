@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ page session="true"%>
 <c:set var="loginOutLink" value="${sessionScope.id==null ? '/login/login' : '/login/logout'}"/>
 <c:set var="loginOut" value="${sessionScope.id==null ? 'Login' : 'Logout'}"/>
 
@@ -173,7 +175,7 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light main_navbar">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">마이레시피</a>
+			<a class="navbar-brand" href="<c:url value='/'/>">마이레시피</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -196,15 +198,14 @@
 						<a class="nav-link" href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
 					</li>
 				</ul>
-<%--				<form class="d-flex">--%>
-<%--					<input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">--%>
-<%--					<button class="btn btn-outline-success" type="submit">Search</button>--%>
-<%--				</form>--%>
+				<form class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
 			</div>
 		</div>
 	</nav>
 </header>
-
 <script>
 	let msg = "${msg}";
 	if(msg=="LIST_ERR")  alert("게시물 목록을 가져오는데 실패했습니다. 다시 시도해 주세요.");
@@ -224,8 +225,7 @@
 					<option value="T" ${option=='T' ? "selected" : ""}>제목만</option>
 					<option value="W" ${option=='W' ? "selected" : ""}>작성자</option>
 				</select>
-
-				<input type="text" name="keyword" class="search-input" type="text" value="${param.keyword}" placeholder="검색어를 입력해주세요">
+				<input type="text" name="keyword" class="search-input" type="text" value="${ph.sc.keyword}" placeholder="검색어를 입력해주세요">
 				<input type="submit" class="search-button" value="검색">
 			</form>
 			<button id="writeBtn" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
@@ -242,7 +242,7 @@
 			<c:forEach var="boardDto" items="${list}">
 				<tr>
 					<td class="no">${boardDto.bno}</td>
-					<td class="title"><a href="<c:url value="/board/read?bno=${boardDto.bno}&page=${ph.page}&pageSize=${ph.pageSize}"/>"><c:out value="${boardDto.title}"/></a></td>
+					<td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>
 					<td class="writer">${boardDto.writer}</td>
 					<c:choose>
 						<c:when test="${boardDto.reg_date.time >= startOfToday}">
@@ -264,18 +264,19 @@
 				</c:if>
 				<c:if test="${totalCnt!=null && totalCnt!=0}">
 					<c:if test="${ph.showPrev}">
-						<a class="page" href="<c:url value="/board/list?page=${ph.beginPage-1}"/>">&lt;</a>
+						<a class="page" href="<c:url value="/board/list${ph.sc.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
 					</c:if>
 					<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-						<a class="page ${i==ph.page? "paging-active" : ""}" href="<c:url value="/board/list?page=${i}"/>">${i}</a>
+						<a class="page ${i==ph.sc.page? "paging-active" : ""}" href="<c:url value="/board/list${ph.sc.getQueryString(i)}"/>">${i}</a>
 					</c:forEach>
 					<c:if test="${ph.showNext}">
-						<a class="page" href="<c:url value="/board/list?page=${ph.endPage+1}"/>">&gt;</a>
+						<a class="page" href="<c:url value="/board/list${ph.sc.getQueryString(ph.endPage+1)}"/>">&gt;</a>
 					</c:if>
 				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
