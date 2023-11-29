@@ -9,7 +9,6 @@ public class PageHandler {
 //    private String option;
 //    private String keyword;
     private SearchCondition sc;
-
     private int totalCnt; //총 게시물 갯수
     private int naviSize = 10; // 페이지 내비게이션의 크기
     private int totalPage; // 전체 페이지의 갯수

@@ -172,40 +172,8 @@
 </head>
 <body>
 <!-- 헤더 -->
-<header>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light main_navbar">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="<c:url value='/'/>">마이레시피</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="<c:url value='/'/>">Home</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							My recipe
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">마이레시피</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="<c:url value='/board/list'/>">자유게시판</a></li>
-						</ul>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
-					</li>
-				</ul>
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
-			</div>
-		</div>
-	</nav>
-</header>
+<jsp:include page="header.jsp"/>
+<!-- 헤더 끝-->
 <script>
 	let msg = "${msg}";
 	if(msg=="LIST_ERR")  alert("게시물 목록을 가져오는데 실패했습니다. 다시 시도해 주세요.");

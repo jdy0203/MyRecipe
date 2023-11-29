@@ -1,6 +1,7 @@
 package com.fastcampus.ch2.dao;
 
 import com.fastcampus.ch2.domain.CommentDto;
+import com.fastcampus.ch2.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,15 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public int update(CommentDto dto) throws Exception{
         return session.update(namespace+"update", dto);
+    }
+
+    @Override
+    public List<CommentDto> commentSelectPage(SearchCondition sc) throws Exception {
+        return session.selectList(namespace+"commentSelectPage", sc);
+    }
+
+    @Override
+    public int commentResultCnt(SearchCondition sc) throws Exception {
+        return session.selectOne(namespace+"commentResultCnt", sc);
     }
 }

@@ -61,5 +61,15 @@ public class CommentServiceImpl implements CommentService {
     public int modify(CommentDto commentDto) throws Exception {
         return commentDao.update(commentDto);
     }
+
+    @Override
+    public List<CommentDto> getPage(SearchCondition sc) throws Exception {
+        return commentDao.commentSelectPage(sc);
+    }
+
+    @Override
+    public int getResultCnt(SearchCondition sc) throws Exception {
+        return commentDao.commentResultCnt(sc);
+    }
 }
 

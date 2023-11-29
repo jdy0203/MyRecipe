@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.fastcampus.ch2.domain.*;
 import com.fastcampus.ch2.service.BoardService;
+import com.fastcampus.ch2.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,9 @@ import java.util.*;
 public class BoardController {
 	@Autowired
 	BoardService boardService;
+
+	@Autowired
+	CommentService commentService;
 
 	@GetMapping("/list")
 	public String list(SearchCondition sc, Model m, HttpServletRequest request) {
