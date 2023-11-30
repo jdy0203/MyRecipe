@@ -59,20 +59,15 @@ public class BoardController {
 		return session.getAttribute("id")!=null;
 	}
 	@GetMapping("/read")
-	public String read(Integer bno, Integer page, Integer pageSize, RedirectAttributes rattr, Model m) {
+	public String read(Integer bno, SearchCondition sc, RedirectAttributes rattr, Model m) {
 		try {
 			BoardDto boardDto = boardService.read(bno);
 			m.addAttribute(boardDto);
-			m.addAttribute("page", page);
-			m.addAttribute("pageSize", pageSize);
 		} catch (Exception e) {
 			e.printStackTrace();
-			rattr.addAttribute("page", page);
-			rattr.addAttribute("pageSize", pageSize);
 			rattr.addFlashAttribute("msg", "READ_ERR");
-			return "redirect:/board/list";
+			return "redirect:/board/list+"+sc.getQueryString();
 		}
-
 		return "board";
 	}
 

@@ -331,7 +331,7 @@
   <div id="comment-writebox">
     <div class="commenter commenter-writebox">${id}</div>
     <div id="comment-writebox-content" class="comment-writebox-content">
-      <textarea name="" id="comment-content" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
+      <textarea name="" id="write-comment" cols="30" rows="3" placeholder="댓글을 남겨보세요"></textarea>
     </div>
   <div id="comment-writebox-bottom">
     <div class="register-box">
@@ -503,9 +503,9 @@
     showList(bno);
 
     $("#btn-write-comment").click(function (){
-      let comment = $("#comment-content").val();
 
-      $("#comment-content").empty();
+      let comment = $("#write-comment").val();
+
       $.ajax({
         type:'POST',       // 요청 메서드
         url: '/ch2/comments?bno='+bno,  // 요청 URI
@@ -514,6 +514,7 @@
         success : function(result){
           alert(result);
           showList(bno);
+          $("#write-comment").val('');
         },
         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
@@ -540,7 +541,6 @@
     $("#btn-write-modify").click(function(){
       let cno = $(this).attr("data-cno");
       let comment = $("#modalWin textarea").val();
-      console.log("cno=" + cno);
       // 1. 변경된 내용을 서버로 전송
       $.ajax({
         type:'PATCH',       // 요청 메서드
@@ -561,10 +561,6 @@
     $(".close").click(function(){
       $("#modalWin").css("display","none");
     });
-
-
-
-
 
     $("#commentList").on("click", ".btn-delete", function () {
       let cno = $(this).attr("data-cno");

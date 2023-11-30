@@ -65,7 +65,7 @@
         WHERE true
         <include refid="searchCondition"/>
         ORDER BY reg_date DESC, bno DESC
-            LIMIT #{offset}, #{pageSize}
+        LIMIT #{offset}, #{pageSize}
     </select>
 
     <select id="searchResultCnt" parameterType="searchCondition" resultType="int">

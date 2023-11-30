@@ -199,31 +199,31 @@
 			<button id="writeBtn" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
 		</div>
 
-		<table>
+	<table>
+		<tr>
+			<th class="no">번호</th>
+			<th class="title">제목</th>
+			<th class="writer">이름</th>
+			<th class="regdate">등록일</th>
+			<th class="viewcnt">조회수</th>
+		</tr>
+		<c:forEach var="boardDto" items="${list}">
 			<tr>
-				<th class="no">번호</th>
-				<th class="title">제목</th>
-				<th class="writer">이름</th>
-				<th class="regdate">등록일</th>
-				<th class="viewcnt">조회수</th>
+				<td class="no">${boardDto.bno}</td>
+				<td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>
+				<td class="writer">${boardDto.writer}</td>
+				<c:choose>
+					<c:when test="${boardDto.reg_date.time >= startOfToday}">
+						<td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>
+					</c:when>
+					<c:otherwise>
+						<td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>
+					</c:otherwise>
+				</c:choose>
+				<td class="viewcnt">${boardDto.view_cnt}</td>
 			</tr>
-			<c:forEach var="boardDto" items="${list}">
-				<tr>
-					<td class="no">${boardDto.bno}</td>
-					<td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>
-					<td class="writer">${boardDto.writer}</td>
-					<c:choose>
-						<c:when test="${boardDto.reg_date.time >= startOfToday}">
-							<td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>
-						</c:when>
-						<c:otherwise>
-							<td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>
-						</c:otherwise>
-					</c:choose>
-					<td class="viewcnt">${boardDto.view_cnt}</td>
-				</tr>
-			</c:forEach>
-		</table>
+		</c:forEach>
+	</table>
 		<br>
 		<div class="paging-container">
 			<div class="paging">
